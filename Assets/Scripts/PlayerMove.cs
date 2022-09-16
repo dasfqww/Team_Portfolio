@@ -47,7 +47,7 @@ public class PlayerMove : MonoBehaviour
             isJumping = false;           
         }
 
-        if (isJumping==false&&Input.GetButtonDown("Jump"))
+        if (!isJumping&&Input.GetButtonDown("Jump"))
         {
             yVelocity = jumpPower;
             isJumping = true;
