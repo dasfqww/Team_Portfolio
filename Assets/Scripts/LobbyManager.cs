@@ -37,6 +37,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         base.OnCreateRoomFailed(returnCode, message);
         print("OnCreatedRoomFailed, "+ returnCode + ", "+message);
+
+        JoinRoom();
     }
 
     public void JoinRoom()
@@ -48,6 +50,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         base.OnJoinedRoom();
         print("OnJoinedRoom");
+        PhotonNetwork.LoadLevel("GameScene");
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)
