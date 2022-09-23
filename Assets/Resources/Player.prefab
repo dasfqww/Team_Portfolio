@@ -404,6 +404,14 @@ MonoBehaviour:
   gravity: -14
   jumpPower: 5
   isAwayTeam: 0
+  curHp: 0
+  maxHp: 50
+  curArmor: 0
+  maxArmor: 0
+  curShield: 0
+  maxShield: 50
+  maxTotalHp: 0
+  curTotalHp: 0
 --- !u!114 &8621252563626783004
 MonoBehaviour:
   m_ObjectHideFlags: 0

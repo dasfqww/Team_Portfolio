@@ -361,8 +361,8 @@
 "Assets/Scripts/Manager/Managers.cs"
 "Assets/Scripts/Manager/SoundManager.cs"
 "Assets/Scripts/Player/PlayerBase.cs"
-"Assets/Scripts/PlayerFire.cs"
-"Assets/Scripts/PlayerMove.cs"
+"Assets/Scripts/Player/PlayerFire.cs"
+"Assets/Scripts/Player/PlayerMove.cs"
 "Assets/Scripts/Projectile.cs"
 -langversion:9.0
 
