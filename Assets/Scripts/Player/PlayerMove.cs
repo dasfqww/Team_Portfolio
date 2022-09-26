@@ -23,7 +23,7 @@ public class PlayerMove : MonoBehaviourPunCallbacks
     float rotX;
     float rotY;
 
-    float takeDamage = 30.0f;
+    [SerializeField] float takeDamage = 120.0f;
 
     CharacterController characterController;
 
@@ -166,58 +166,70 @@ public class PlayerMove : MonoBehaviourPunCallbacks
         photonView.RPC("RpcOnDamaged", RpcTarget.All);
     }
 
+    public void OnHealed()
+    {
+
+    }
+
     [PunRPC]
     void RpcOnDamaged()
     {
-        if (curShield > 0)
+        if (curShield > 0)//보호막이 존재할 때
         {
 
-            if (takeDamage > curShield && curShield > 0 )
+            if ((takeDamage > curShield) && (curShield > 0) )//보호막이 존재하고 받는 데미지가 현재 보호막 양보다 클때
             {
-                if(curArmor > 0)
+                if(curArmor > 0)// 방어구가 존재할때
                 {
-                    curArmor -= (takeDamage - curShield);
-                    curShield -= takeDamage;
-                    curTotalHp -= takeDamage;
+                    //TODO:뎀감 공식 구현
+
+                    if(takeDamage>(curArmor+curShield))//받는 데미지가 현재 방어구+현재 보호막의 값보다 클 때
+                    {
+                        curHp -= takeDamage - (curArmor + curShield);
+                        curArmor = 0;
+                        curShield = 0;
+                        
+                    }
+                    else//그렇지 않을 때
+                    {
+                        curArmor -= (takeDamage - curShield);
+                        curShield = 0;
+                        //curTotalHp -= takeDamage;
+                    }                                  
                 }
 
-                else if (curArmor<=0)
+                else if (curArmor<=0)//보호막은 존재하지만 방어구는 존재하지 않을 때
                 {
                     curHp -= (takeDamage - curShield);
-                    curShield -= takeDamage;
-                    curTotalHp -= takeDamage;
-                }
-
-                else if (curShield <= 0)
-                {
-                    curShield = 0;
-                }
-                
+                    curShield =0;
+                    //curTotalHp -= takeDamage;                   
+                }                              
             }
                      
             else
             {
                 curShield -= takeDamage;
-                curTotalHp -= takeDamage;
+                //curTotalHp -= takeDamage;
             }
+            curTotalHp -= takeDamage;
         }
 
-        else if (curArmor > 0)
+        else if (curArmor > 0 && curShield<=0)//방어구가 존재하나 쉴드가 존재하지 않을 때
         {
+            //TODO:뎀감 공식 구현
 
-            if (takeDamage > curArmor && curArmor > 0)
+            if (takeDamage > curArmor && curArmor > 0)//방어구가 존재하는데 받는 데미지가 남은 방어구보다 클때
             {
                 curHp -= (takeDamage - curArmor);
-                curArmor -= takeDamage;
-                curTotalHp -= takeDamage;
-                if (curArmor <= 0) curArmor = 0;
+                curArmor = 0;                                
             }
 
             else
             {
                 curArmor -= takeDamage;
-                curTotalHp -= takeDamage;
-            }            
+                //curTotalHp -= takeDamage;
+            }
+            curTotalHp -= takeDamage;
         }
 
         else

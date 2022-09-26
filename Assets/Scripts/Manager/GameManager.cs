@@ -27,8 +27,8 @@ public class GameManager : MonoBehaviour
 
     int maxWins = 2;//승리 조건 - 어느 팀이든 2승 먼저하면 그팀 승리
 
-    [SerializeField] bool isRedGageUp = false;//레드팀 점령 중 여부
-    [SerializeField] bool isBlueGageUp = false;//블루팀 점령 중 여부
+    [SerializeField] bool isRedGageUp = false;//레드팀 점령 중 여부//TODO 구현되면 사라질예정
+    [SerializeField] bool isBlueGageUp = false;//블루팀 점령 중 여부//TODO 구현되면 사라질예정
 
     [SerializeField] bool isOccupiedRed;//레드팀이 거점 쟁탈함
     [SerializeField] bool isOccupiedBlue;//블루팀이 거점 쟁탈함

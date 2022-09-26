@@ -403,11 +403,12 @@ MonoBehaviour:
   camPos: {fileID: 8621252563117959281}
   gravity: -14
   jumpPower: 5
+  takeDamage: 40
   isAwayTeam: 0
   curHp: 0
   maxHp: 50
   curArmor: 0
-  maxArmor: 0
+  maxArmor: 50
   curShield: 0
   maxShield: 50
   maxTotalHp: 0
