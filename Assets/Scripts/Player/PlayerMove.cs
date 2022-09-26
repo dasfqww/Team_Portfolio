@@ -31,8 +31,8 @@ public class PlayerMove : MonoBehaviourPunCallbacks
 
     [SerializeField] bool isAwayTeam;
 
-    [SerializeField] float curHp;
-    [SerializeField] float maxHp=50.0f;
+    [SerializeField] protected float curHp; // UI 체력바 테스트를 하느라 상속받았습니다. by 혜원
+    [SerializeField] protected float maxHp =50.0f; // UI 체력바 테스트를 하느라 상속받았습니다. by 혜원
     [SerializeField] float curArmor;
     [SerializeField] float maxArmor = 50.0f;
     [SerializeField] float curShield;
