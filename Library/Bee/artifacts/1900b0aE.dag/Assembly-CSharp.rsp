@@ -400,6 +400,8 @@
 "Assets/Photon/PhotonLibs/WebSocket/WebSocket.cs"
 "Assets/Photon/PhotonRealtime/Demos/DemoLoadBalancing/ConnectAndJoinRandomLb.cs"
 "Assets/Scripts/BaseBuff.cs"
+"Assets/Scripts/Effect/HealPlus.cs"
+"Assets/Scripts/Effect/HealSpawner.cs"
 "Assets/Scripts/LobbyManager.cs"
 "Assets/Scripts/Manager/ConnectionManager.cs"
 "Assets/Scripts/Manager/DataManager.cs"
@@ -410,6 +412,7 @@
 "Assets/Scripts/Player/PlayerFire.cs"
 "Assets/Scripts/Player/PlayerMove.cs"
 "Assets/Scripts/Projectile.cs"
+"Assets/Scripts/UI/UI_HpGauge.cs"
 -langversion:9.0
 
 /deterministic

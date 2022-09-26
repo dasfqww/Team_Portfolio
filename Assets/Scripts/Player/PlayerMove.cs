@@ -24,6 +24,7 @@ public class PlayerMove : MonoBehaviourPunCallbacks
     float rotY;
 
     [SerializeField] float takeDamage = 120.0f;
+    [SerializeField] float takeHeal = 15.0f;
 
     CharacterController characterController;
 
@@ -81,6 +82,11 @@ public class PlayerMove : MonoBehaviourPunCallbacks
         if (Input.GetKeyDown(KeyCode.G))
         {
             OnDamaged();
+        }
+
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            OnHealing();
         }
     }
 
@@ -166,9 +172,9 @@ public class PlayerMove : MonoBehaviourPunCallbacks
         photonView.RPC("RpcOnDamaged", RpcTarget.All);
     }
 
-    public void OnHealed()
+    public void OnHealing()
     {
-
+        photonView.RPC("OnHealingRPC", RpcTarget.All);
     }
 
     [PunRPC]
@@ -243,6 +249,45 @@ public class PlayerMove : MonoBehaviourPunCallbacks
             curHp = 0;
             curTotalHp = 0;
             Debug.Log("Die...");
+        }
+    }
+
+    [PunRPC]
+    void OnHealingRPC()
+    {
+        if (curHp == maxHp && curArmor == maxArmor)
+            return;
+
+        if (curHp != maxHp || curArmor != maxArmor)
+        {
+            if (curHp == maxHp && curArmor != maxArmor)
+            {
+                curArmor += takeHeal;
+                if (curArmor >= maxArmor)
+                {
+                    curArmor = maxArmor;
+                }
+            }
+
+            else if (curHp != maxHp && curArmor == 0)
+            {
+                if (takeHeal > (maxHp - curHp))
+                {
+                    curHp = maxHp;
+                    curArmor += (maxHp - curHp);
+                }
+                else
+                {
+                    curHp += takeHeal;
+                }
+            }
+
+
+            curTotalHp += takeHeal;
+            if (curTotalHp >= maxTotalHp)
+            {
+                curTotalHp = maxTotalHp;
+            }
         }
     }
 
