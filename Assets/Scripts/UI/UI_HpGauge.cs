@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class UI_HpGauge : PlayerMove
 {
+    PlayerMove playerMove = new PlayerMove();
+
     // 현재체력 / 맥스체력 text 표시
     public Text curHealth = null;
     public Text maxHealth = null;
@@ -27,12 +29,12 @@ public class UI_HpGauge : PlayerMove
     // Start is called before the first frame update
     void Start()
     {
-        curHealth.text = curHp.ToString();
-        maxHealth.text = maxHp.ToString();
+        curHealth.text = playerMove.curhp.ToString();
+        maxHealth.text = playerMove.maxhp.ToString();
 
         for (int i = 0; i < imageList.Count; i++)
         {
-            imageList[i].fillAmount = 1;
+            imageList[i].fillAmount = 0;
         }
     }
 
@@ -41,16 +43,16 @@ public class UI_HpGauge : PlayerMove
     {
         //HealthDown();
 
-        curHealth.text = curHp.ToString();
-        maxHealth.text = maxHp.ToString();
+        curHealth.text = playerMove.curhp.ToString();
+        maxHealth.text = playerMove.maxhp.ToString();
 
         fillHealthBox();
     }
 
     void fillHealthBox()
     {
-        int fill_num = (int)curHp / 25;
-        int rest_gauge = (int)curHp % 25;
+        int fill_num = (int)playerMove.curhp / 25;
+        int rest_gauge = (int)playerMove.maxhp % 25;
         fill = 0;
         //float filledAmount = 25.0f * last_fill_idx;
 
@@ -61,7 +63,7 @@ public class UI_HpGauge : PlayerMove
 
         fill *= 25.0f;
 
-        if (curHp > fill) // Hp증가시킬때 by 혜원
+        if (playerMove.curhp > fill) // Hp증가시킬때 by 혜원
         {
             if (fill_num == 0)
             {
@@ -88,7 +90,7 @@ public class UI_HpGauge : PlayerMove
                 }
             }
         }
-        else if (curHp < fill) // HP 감소시킬때 by 혜원
+        else if (playerMove.curhp < fill) // HP 감소시킬때 by 혜원
         {
             if (fill_num >= imageList.Count - 1)
             {
@@ -122,11 +124,11 @@ public class UI_HpGauge : PlayerMove
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            curHp += 8;
+            playerMove.curhp += 8;
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            curHp -= 8;
+            playerMove.curhp -= 8;
         }
     }
 }
