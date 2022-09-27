@@ -32,8 +32,8 @@ public class PlayerMove : MonoBehaviourPunCallbacks
 
     [SerializeField] bool isAwayTeam;
 
-    [SerializeField] protected float curHp; // UI 체력바 테스트를 하느라 상속받았습니다. by 혜원
-    [SerializeField] protected float maxHp =50.0f; // UI 체력바 테스트를 하느라 상속받았습니다. by 혜원
+    [SerializeField] float curHp = 50.0f; // UI 체력바에 현재체력을 최대체력으로 만들었습니다. by 혜원
+    [SerializeField] float maxHp = 50.0f;
     [SerializeField] float curArmor;
     [SerializeField] float maxArmor = 50.0f;
     [SerializeField] float curShield;
@@ -41,6 +41,18 @@ public class PlayerMove : MonoBehaviourPunCallbacks
 
     [SerializeField] float maxTotalHp;
     [SerializeField] float curTotalHp;
+
+    public float curhp // UI 체력바에 현재체력을 연결시키려고 만들었습니다. by 혜원
+    {
+        get { return curHp; }
+        set { curHp = curhp; }
+    }
+
+    public float maxhp // UI 체력바에 현재체력을 연결시키려고 만들었습니다. by 혜원
+    {
+        get { return maxHp; }
+        set { maxHp = maxhp; }
+    }
 
     private void Awake()
     {

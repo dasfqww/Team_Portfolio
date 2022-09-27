@@ -404,6 +404,7 @@ MonoBehaviour:
   gravity: -14
   jumpPower: 5
   takeDamage: 40
+  takeHeal: 15
   isAwayTeam: 0
   curHp: 0
   maxHp: 50
