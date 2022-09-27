@@ -411,6 +411,7 @@
 "Assets/Scripts/Player/PlayerBase.cs"
 "Assets/Scripts/Player/PlayerFire.cs"
 "Assets/Scripts/Player/PlayerMove.cs"
+"Assets/Scripts/Player/Solta.cs"
 "Assets/Scripts/Projectile.cs"
 "Assets/Scripts/UI/UI_HpGauge.cs"
 -langversion:9.0
