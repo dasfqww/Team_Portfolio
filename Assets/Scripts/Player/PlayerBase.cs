@@ -22,7 +22,6 @@ public  class PlayerBase : MonoBehaviour
 
     [SerializeField] float moveSpeed = 5.0f;
 
-
     [SerializeField]
     enum PlayerType
     {
