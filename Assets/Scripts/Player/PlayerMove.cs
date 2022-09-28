@@ -207,15 +207,13 @@ public class PlayerMove : MonoBehaviourPunCallbacks
                 else if (curArmor<=0)//보호막은 존재하지만 방어구는 존재하지 않을 때
                 {
                     curHp -= (takeDamage - curShield);
-                    curShield =0;
-                    //curTotalHp -= takeDamage;                   
+                    curShield =0;                                   
                 }                              
             }
                      
             else
             {
-                curShield -= takeDamage;
-                //curTotalHp -= takeDamage;
+                curShield -= takeDamage;               
             }
             curTotalHp -= takeDamage;
         }
@@ -238,7 +236,7 @@ public class PlayerMove : MonoBehaviourPunCallbacks
             curTotalHp -= takeDamage;
         }
 
-        else
+        else//방어구가 존재하지 않고 보호막또한 존재하지 않을 때
         {
             curHp -= takeDamage;
             curTotalHp -= takeDamage;

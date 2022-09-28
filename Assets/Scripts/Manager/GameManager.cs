@@ -13,6 +13,15 @@ public class GameManager : MonoBehaviour
     //[SerializeField] Transform RedRespawnPos[];
     //[SerializeField] Transform BlueRespawnPos[];
 
+    enum GameState
+    {
+        Waiting,
+        Ready,
+        Proceeding,
+        RoundFinish,
+        GameOver
+    }
+
     [SerializeField] float occupyingGageRed;// 레드팀 점령게이지
     [SerializeField] float occupyingGageBlue;// 블루팀 점령게이지
 
@@ -62,7 +71,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         
-        PhotonNetwork.Instantiate("Player", Vector3.zero, Quaternion.identity);
+        PhotonNetwork.Instantiate("Player", Vector3.up, Quaternion.identity);
         //OccupationZone.SetActive(false);
     }
 

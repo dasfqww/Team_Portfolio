@@ -2,16 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Solta : MonoBehaviour
+public class Solta : PlayerBase
 {
-    // Start is called before the first frame update
-    void Start()
+    public override void useESkill()
     {
         
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void useLeftClick()
+    {
+        
+    }
+
+    public override void useRightClickSkill()
+    {
+       
+    }
+
+    public override void useShiftSkill()
     {
         
     }
