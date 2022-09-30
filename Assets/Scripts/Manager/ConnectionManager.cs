@@ -21,9 +21,8 @@ public class ConnectionManager : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
-        OnConnectedToMaster();
+        
     }
-
 
     public override void OnConnected()
     {
