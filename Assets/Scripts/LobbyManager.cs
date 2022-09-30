@@ -24,7 +24,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
         roomOptions.MaxPlayers = 6;
 
-        PhotonNetwork.CreateRoom("TestRoom", roomOptions, TypedLobby.Default);
+        PhotonNetwork.CreateRoom("TestRoom1", roomOptions, TypedLobby.Default);
     }
 
     public override void OnCreatedRoom()
@@ -43,7 +43,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public void JoinRoom()
     {
-        PhotonNetwork.JoinRoom("TestRoom");
+        PhotonNetwork.JoinRoom("TestRoom1");
     }
 
     public override void OnJoinedRoom()
