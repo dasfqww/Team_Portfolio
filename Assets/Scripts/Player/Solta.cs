@@ -15,7 +15,7 @@ public class Solta : PlayerBase
         {
             photonView.RPC("SetupCharacter", RpcTarget.All);
         }
-        
+        SetupCharacter();
     }
 
     [PunRPC]
