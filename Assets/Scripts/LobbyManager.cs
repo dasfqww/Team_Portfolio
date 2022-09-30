@@ -9,7 +9,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
-        CreateRoom();
+        //CreateRoom();
     }
 
     // Update is called once per frame

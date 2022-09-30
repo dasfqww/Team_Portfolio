@@ -32,15 +32,39 @@ public class PlayerMove : MonoBehaviourPunCallbacks
 
     [SerializeField] bool isAwayTeam;
 
-    [SerializeField] protected float curHp; // UI 체력바 테스트를 하느라 상속받았습니다. by 혜원
-    [SerializeField] protected float maxHp =50.0f; // UI 체력바 테스트를 하느라 상속받았습니다. by 혜원
+    [SerializeField] float curHp;
+    [SerializeField] float maxHp;
     [SerializeField] float curArmor;
     [SerializeField] float maxArmor = 50.0f;
     [SerializeField] float curShield;
     [SerializeField] float maxShield = 50.0f;
 
-    [SerializeField] float maxTotalHp;
-    [SerializeField] float curTotalHp;
+    [SerializeField] float maxTotalHp = 200.0f; // 체력바 테스트를 위해 UI 체력바에 현재체력을 최대체력으로 만들었습니다. by 혜원
+    [SerializeField] float curTotalHp = 200.0f; // 체력바 테스트를 위해 UI 체력바에 현재체력을 최대체력으로 만들었습니다. by 혜원
+
+    public float curshield // UI 체력바에 현재체력을 연결시키려고 만들었습니다. by 혜원
+    {
+        get { return curShield; }
+        set { curShield = value; }
+    }
+
+    public float maxshield // UI 체력바에 현재체력을 연결시키려고 만들었습니다. by 혜원
+    {
+        get { return maxShield; }
+        set { maxShield = maxshield; }
+    }
+
+    public float curhp // UI 체력바에 현재체력을 연결시키려고 만들었습니다. by 혜원
+    {
+        get { return curTotalHp; }
+        set { this.curTotalHp = value; }
+    }
+
+    public float maxhp // UI 체력바에 현재체력을 연결시키려고 만들었습니다. by 혜원
+    {
+        get { return maxTotalHp; }
+        set { this.maxTotalHp = maxhp; }
+    }
 
     private void Awake()
     {
