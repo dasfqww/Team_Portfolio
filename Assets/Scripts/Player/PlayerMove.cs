@@ -315,8 +315,11 @@ public class PlayerMove : MonoBehaviourPunCallbacks
 
     private void OnTriggerEnter(Collider other)
     {
+        isAwayTeam = true; // 테스트를 위해 잠시 팀을 지정했습니다.
+        
         if (other.gameObject.tag=="OccupationZone"&&isAwayTeam==true)
         {
+            print("OccupationZone Enter"); // 테스트를 위해 잠시 팀을 지정했습니다.
             GameManager.instance.playerRedCount++;
         }
 
@@ -328,8 +331,11 @@ public class PlayerMove : MonoBehaviourPunCallbacks
 
     private void OnTriggerExit(Collider other)
     {
+        isAwayTeam = true; // 테스트를 위해 잠시 팀을 지정했습니다.
+        
         if (other.gameObject.tag == "OccupationZone" && isAwayTeam == true)
         {
+            print("OccupationZone out"); // 테스트를 위해 잠시 팀을 지정했습니다.
             GameManager.instance.playerRedCount--;
         }
 

@@ -132,10 +132,8 @@ public class UI_HpGauge : MonoBehaviour
         }
         else if (playerMove.curhp < fill) // HP 감소시킬때 by 혜원
         {
-
             if (fill_num >= imageList.Count - 1)//if (fill_num <= imageList.Count - 1 && fill_num >= 0) //if (fill_num >= imageList.Count - 1)
             {
-                
                 if (imageList[fill_num].fillAmount > (float)rest_gauge / 20.0f)
                 {
                     imageList[fill_num].fillAmount -= fillSpeed * Time.deltaTime;
