@@ -5,10 +5,11 @@ using UnityEngine.UI;
 
 public class UI_Ultimate : MonoBehaviour
 {
-    /*[SerializeField]
-    private int interval = 20; // ±Ã±Ø±â ¿ø ³ª´²Áø Ä­ °³¼ö by Çý¿ø*/
+    [SerializeField]
+    private int interval = 20; // ±Ã±Ø±â ¿ø ³ª´²Áø Ä­ °³¼ö by Çý¿ø
 
-    private float tick = 0.01f;
+    [SerializeField]
+    private float tick = 0.05f;
 
     public Image circle = null;
     public Image ultimate_back_img = null;
@@ -17,13 +18,6 @@ public class UI_Ultimate : MonoBehaviour
     public Text cur_gauge_percent_txt = null;
 
     float cur_gauge_percent;
-    float fill_gauge;
-    float fill_attack_gauge = 0;
-    bool attack_success = false;
-
-    [SerializeField]
-    private float fill_velocity = 4.0f;
-
 
     float timer = 0;
     float waiting = 1.0f;
@@ -50,54 +44,24 @@ public class UI_Ultimate : MonoBehaviour
         timer += Time.deltaTime;
         if(waiting < timer)
         {
-            fill_gauge += tick;
             print("timer");
-
-            if(attack_success)
+            if(circle.fillAmount < 1)
             {
-                cur_gauge_percent += (tick * 4.0f * 100.0f);
-                if (cur_gauge_percent > 100)
-                    cur_gauge_percent = 100;
-            }
-            else
-            {
+                circle.fillAmount += tick;
                 cur_gauge_percent += (tick * 100.0f);
-                if (cur_gauge_percent > 100)
-                    cur_gauge_percent = 100;
+                cur_gauge_percent_txt.text = cur_gauge_percent.ToString() + "%";
             }
-
-            cur_gauge_percent_txt.text = cur_gauge_percent.ToString() + "%";
 
             timer = 0;
-        }
-
-        if (circle.fillAmount < fill_gauge)
-        {
-            if (fill_attack_gauge <= 0)
-            {
-                attack_success = false;
-                fill_attack_gauge = 0;
-            }
-               
-            if (attack_success)
-            {
-                fill_attack_gauge -= tick * fill_velocity * Time.deltaTime;
-                circle.fillAmount += tick * fill_velocity * Time.deltaTime;
-            }
-            else
-                circle.fillAmount += (tick * Time.deltaTime);
-        }
+        }    
 
         if (Input.GetMouseButtonDown(1)) // Å×½ºÆ®¸¦ À§ÇØ ¿ìÅ¬¸¯ °ø°Ý½Ã ÀÏ¹Ý°ø°Ý¼º°øÀ¸·Î °¡Á¤ÇÏ°í 4Æ½°ÔÀÌÁö »ó½Â½ÃÄ×½À´Ï´Ù. by Çý¿ø
         {
             if (circle.fillAmount < 1)
             {
-                attack_success = true;
-                fill_gauge += tick * 4.0f;
-                fill_attack_gauge = tick * 4.0f;
-                //circle.fillAmount += tick * 4.0f * Time.deltaTime;
-                //cur_gauge_percent += (tick * 4.0f * 100.0f);
-                //cur_gauge_percent_txt.text = cur_gauge_percent.ToString() + "%";
+                circle.fillAmount += tick * 4.0f;
+                cur_gauge_percent += (tick * 4.0f * 100.0f);
+                cur_gauge_percent_txt.text = cur_gauge_percent.ToString() + "%";
             }
             //circle.fillAmount += tick * 4.0f;
         }
