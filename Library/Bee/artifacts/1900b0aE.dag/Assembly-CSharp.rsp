@@ -408,11 +408,14 @@
 "Assets/Scripts/Manager/GameManager.cs"
 "Assets/Scripts/Manager/Managers.cs"
 "Assets/Scripts/Manager/SoundManager.cs"
+"Assets/Scripts/Player/IDamageAndHealable.cs"
 "Assets/Scripts/Player/PlayerBase.cs"
 "Assets/Scripts/Player/PlayerFire.cs"
 "Assets/Scripts/Player/PlayerMove.cs"
 "Assets/Scripts/Player/Solta.cs"
 "Assets/Scripts/Projectile.cs"
+"Assets/Scripts/Projectiles/ProjectileBase.cs"
+"Assets/Scripts/Projectiles/RazerWeapon.cs"
 "Assets/Scripts/UI/UI_HpGauge.cs"
 -langversion:9.0
 

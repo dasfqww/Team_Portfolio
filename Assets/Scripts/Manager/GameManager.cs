@@ -13,13 +13,23 @@ public class GameManager : MonoBehaviour
     //[SerializeField] Transform RedRespawnPos[];
     //[SerializeField] Transform BlueRespawnPos[];
 
-    [SerializeField] public float occupyingGageRed { get; set; }// 레드팀 점령게이지
-    [SerializeField] public float occupyingGageBlue { get; set; }// 블루팀 점령게이지
+    enum GameState
+    {
+        Waiting,
+        Ready,
+        Proceeding,
+        RoundFinish,
+        GameOver
+    }
 
-    [SerializeField] public int occupyingRatioRed { get; set; }//레드팀 점령 유지 %
-    [SerializeField] public int occupyingRatioBlue { get; set; }//블루팀 점령 유지 %
+    [SerializeField] float occupyingGageRed;// 레드팀 점령게이지
+    [SerializeField] float occupyingGageBlue;// 블루팀 점령게이지
 
-    [SerializeField] float fillSpeed = 1.0f;//점령 게이지 오르는 속도
+    [SerializeField] int occupyingRatioRed;//레드팀 점령 유지 %
+    [SerializeField] int occupyingRatioBlue;//블루팀 점령 유지 %
+
+    //UI연결 무관
+    [SerializeField] float fillSpeed = 1.0f;//점령 게이지 오르는 속도(multiplyer구현 예정)
     [SerializeField] float fillAmount = 4.0f;//유지해야하는 점령 시간
 
     [SerializeField] int RedTeamWins = 0;//레드팀 승리 횟수
@@ -34,18 +44,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] bool isOccupiedBlue;//블루팀이 거점 쟁탈함
 
     //점령존에 존재하는 레드팀 플레이어 수
-    [SerializeField] public int playerRedCount { get; set; } = 0;
+    public int playerRedCount { get; set; } = 0;
     //점령존에 존재하는 블루팀 플레이어 수
-    [SerializeField] public int playerBlueCount { get; set; } = 0;
+    public int playerBlueCount { get; set; } = 0;
 
     private PhotonView photonView;
 
     WaitForSeconds ratioCountDelay;
-
-
-
-    //테스트를 위한 임시변수입니다. by 혜원
-    float timer = 0;
 
     private void Awake()
     {
@@ -66,7 +71,8 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        PhotonNetwork.Instantiate("Player", Vector3.zero, Quaternion.identity);
+        
+        PhotonNetwork.Instantiate("Player", Vector3.up, Quaternion.identity);
         //OccupationZone.SetActive(false);
     }
 
@@ -85,48 +91,10 @@ public class GameManager : MonoBehaviour
 
         if (isOccupiedRed==true||isOccupiedBlue==true)
         {
-            // : 테스트를 위한 임시코드입니다. by 혜원
-            if(!isOccupiedBlue) // 레드팀 점령게이지 키우기
-            {
-                timer += Time.deltaTime;
-                if(timer >= 1)
-                {
-                    occupyingRatioRed += (int)timer;
-                    if(occupyingRatioRed > 100)
-                    {
-                        occupyingRatioRed = 100;
-                    }
-                    timer = 0;
-                }
 
-                if(occupyingRatioRed == 100)
-                {
-                    RedTeamWins++;
-                }
-            }
-
-            if(!isOccupiedRed) // 블루팀 점령게이지 키우기
-            {
-                timer += Time.deltaTime;
-                if (timer >= 1)
-                {
-                    occupyingRatioBlue += (int)timer;
-                    if (occupyingRatioBlue > 100)
-                    {
-                        occupyingRatioBlue = 100;
-                    }
-                    timer = 0;
-                }
-
-                if (occupyingRatioBlue == 100)
-                {
-                    BlueTeamWins++;
-                }
-            }
-            //:end
         }
 
-        if (RedTeamWins == maxWins || BlueTeamWins== maxWins)
+        if (RedTeamWins== maxWins || BlueTeamWins== maxWins)
         {
             GameOver();
         }
@@ -146,20 +114,6 @@ public class GameManager : MonoBehaviour
     {
         if (playerRedCount > 0 && playerBlueCount == 0)
         {
-            // : 테스트를 위한 임시코드입니다. by 혜원
-            if(occupyingGageRed < fillAmount)
-                occupyingGageRed += fillSpeed;
-
-            if (occupyingGageRed == fillAmount)
-            {
-                occupyingGageBlue = 0;
-                isOccupiedBlue = false;
-                isOccupiedRed = true;
-                //occupyingRatioRed += (int)fillSpeed;
-            }
-            // : end
-
-
             isRedGageUp = true;
             isBlueGageUp = false;
             //TODO:레드팀 점령 게이지 상승 및 UI출력
@@ -176,23 +130,10 @@ public class GameManager : MonoBehaviour
     {
         if (playerRedCount == 0 && playerBlueCount > 0)
         {
-            // : 테스트를 위한 임시코드입니다. by 혜원
-            if (occupyingGageBlue < fillAmount)
-                occupyingGageBlue += fillSpeed;
-
-            if(occupyingGageBlue == fillAmount)
-            {
-                occupyingGageRed = 0;
-                isOccupiedRed = false;
-                isOccupiedBlue = true;
-                //occupyingRatioBlue += (int)fillSpeed;
-            }
-            // : end
-
-
             isRedGageUp = false;
             isBlueGageUp = true;
             //TODO:블루팀 점령 게이지 상승 및 UI출력
+
         }
 
         else
