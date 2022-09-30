@@ -42,6 +42,15 @@ MonoBehaviour:
   - RpcShowImpact
   - RpcOnDamaged
   - OnHealingRPC
+  - TakeDamage
+  - TakeHeal
+  - useESkill
+  - useLeftClick
+  - useRightClickSkill
+  - useShiftSkill
+  - useUltimateSkill
+  - persistPassive
+  - SetupCharacter
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0

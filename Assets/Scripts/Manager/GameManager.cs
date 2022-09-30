@@ -13,13 +13,23 @@ public class GameManager : MonoBehaviour
     //[SerializeField] Transform RedRespawnPos[];
     //[SerializeField] Transform BlueRespawnPos[];
 
+    enum GameState
+    {
+        Waiting,
+        Ready,
+        Proceeding,
+        RoundFinish,
+        GameOver
+    }
+
     [SerializeField] float occupyingGageRed;// 레드팀 점령게이지
     [SerializeField] float occupyingGageBlue;// 블루팀 점령게이지
 
     [SerializeField] int occupyingRatioRed;//레드팀 점령 유지 %
     [SerializeField] int occupyingRatioBlue;//블루팀 점령 유지 %
 
-    [SerializeField] float fillSpeed = 1.0f;//점령 게이지 오르는 속도
+    //UI연결 무관
+    [SerializeField] float fillSpeed = 1.0f;//점령 게이지 오르는 속도(multiplyer구현 예정)
     [SerializeField] float fillAmount = 4.0f;//유지해야하는 점령 시간
 
     [SerializeField] int RedTeamWins = 0;//레드팀 승리 횟수
@@ -34,9 +44,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] bool isOccupiedBlue;//블루팀이 거점 쟁탈함
 
     //점령존에 존재하는 레드팀 플레이어 수
-    [SerializeField] public int playerRedCount { get; set; } = 0;
+    public int playerRedCount { get; set; } = 0;
     //점령존에 존재하는 블루팀 플레이어 수
-    [SerializeField] public int playerBlueCount { get; set; } = 0;
+    public int playerBlueCount { get; set; } = 0;
 
     private PhotonView photonView;
 
@@ -62,7 +72,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         
-        PhotonNetwork.Instantiate("Player", Vector3.zero, Quaternion.identity);
+        PhotonNetwork.Instantiate("Player", Vector3.up, Quaternion.identity);
         //OccupationZone.SetActive(false);
     }
 
