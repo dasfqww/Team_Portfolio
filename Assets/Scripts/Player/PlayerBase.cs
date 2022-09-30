@@ -6,17 +6,29 @@ using Photon.Realtime;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(CapsuleCollider))]
-public abstract class PlayerBase : MonoBehaviour, IDamageAndHealable
+public class PlayerBase : MonoBehaviour, IDamageAndHealable
 {
     private Rigidbody rigidbody;
 
-    PhotonView photonView;
+    protected PhotonView photonView;
 
     [SerializeField] Transform camPos;
+
+    //삭제될 예정 probably?
+    [SerializeField] protected GameObject projectile;
+    [SerializeField] protected Transform firePos;
+
+    [SerializeField] protected ParticleSystem hitEffect;
+    [SerializeField] protected ParticleSystem healEffect;
+
+    protected enum PlayerType { Attack, Tank, Support }
+    protected enum PlayerState { Idle, Attack, Moving, Dead}
 
     [Header("Character Stat")]
     [SerializeField] protected float dealAmount;
     [SerializeField] protected float healAmount;
+    [SerializeField] protected int curAmmo;
+    [SerializeField] protected int maxAmmo;
     [SerializeField] protected float curHp; // UI 체력바 테스트를 하느라 상속받았습니다. by 혜원
     [SerializeField] protected float maxHp = 50.0f; // UI 체력바 테스트를 하느라 상속받았습니다. by 혜원
     [SerializeField] protected float curArmor;
@@ -27,13 +39,10 @@ public abstract class PlayerBase : MonoBehaviour, IDamageAndHealable
     [SerializeField] protected float curTotalHp;
     [SerializeField] protected float curUltimateGage;
     [SerializeField] protected float maxUltimateGage;
-    [SerializeField]
-    protected enum PlayerType
-    {
-        Attack,
-        Tank,
-        Support
-    }
+    [SerializeField] protected PlayerType playerType;
+
+    
+
     [SerializeField] protected float attackRate;//연사 공격의 경우 공격 간격을 설정
 
     [Header("Movement")]
@@ -41,6 +50,7 @@ public abstract class PlayerBase : MonoBehaviour, IDamageAndHealable
     [SerializeField] float lookSensitivity;
     [SerializeField] float crouchSpeed;
     [SerializeField] float jumpForce;
+    [SerializeField] protected bool isDead = false;
 
     WaitForSeconds delayTime;
 
@@ -56,11 +66,15 @@ public abstract class PlayerBase : MonoBehaviour, IDamageAndHealable
 
     private CapsuleCollider capsuleCollider;
 
-    
+   
 
     // Start is called before the first frame update
     void Awake()
     {
+        maxTotalHp = SetTotalHp();
+        curTotalHp = maxTotalHp;
+        curHp = maxHp;
+        curArmor = maxHp;
         delayTime = new WaitForSeconds(1.0f);
         capsuleCollider = GetComponent<CapsuleCollider>();
         rigidbody = GetComponent<Rigidbody>();
@@ -70,41 +84,98 @@ public abstract class PlayerBase : MonoBehaviour, IDamageAndHealable
         //rotDelta = rotSpeed * Time.deltaTime;
     }
 
-    private void Start()
+    public virtual void Start()
     {
         photonView = GetComponent<PhotonView>();
         if (photonView.IsMine == true)
         {
             camPos.gameObject.SetActive(true);
         }
+        persistPassive();
     }
+
+    float SetTotalHp() { return maxHp + maxArmor + maxShield; }
 
     // Update is called once per frame
     void Update()
     {
-        if (photonView.IsMine == false)
-            return;
+        if (photonView.IsMine==true)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                photonView.RPC("useLeftClick", RpcTarget.All);
+            }
 
-        checkIsGround();
-        TryJump();
-        TryCrouch();
-        Movement();
-        CharacterRotation();
-        CamRoatation();
+            if (Input.GetMouseButtonDown(1))
+            {
+                photonView.RPC("useRightClickSkill", RpcTarget.All);
+            }
+
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                useESkill();
+            }
+
+            if (Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                useShiftSkill();
+            }
+
+            checkIsGround();
+            TryJump();
+            //TryCrouch();
+            Movement();
+            CharacterRotation();
+            CamRoatation();
+        }        
     }
 
-   /* private void FixedUpdate()
+     /*private void FixedUpdate()
+     {
+         MovePlayer();
+     }*/
+
+    public virtual void SetupCharacter()//여기서 캐릭터의 스탯을 설정할 것
     {
-        MovePlayer();
-    }*/
+        if (photonView.IsMine == false)
+            return;
+    }
 
-    public abstract void useShiftSkill();
-    public abstract void useESkill();
-    public abstract void useLeftClick();
-    public abstract void useRightClickSkill();
+    public virtual void useShiftSkill()//shift key
+    {
+        if (photonView.IsMine == false)
+            return;
+    }
 
+    public virtual void useESkill()//E key
+    {
+        if (photonView.IsMine == false)
+            return;
+    }
+
+    public virtual void useLeftClick()//Left Click
+    {
+        if (photonView.IsMine == false)
+            return;
+    }
+
+    public virtual void useRightClickSkill()//right Skill
+    {
+        if (photonView.IsMine == false)
+            return;
+    }
+
+    public virtual void persistPassive()//passive
+    {
+        if (photonView.IsMine == false)
+            return;
+    }
+  
     public virtual void useUltimateSkill()
     {
+        if (photonView.IsMine == false)
+
+
         if (curUltimateGage != maxUltimateGage)
             return;        
     }
@@ -208,8 +279,20 @@ public abstract class PlayerBase : MonoBehaviour, IDamageAndHealable
     }*/
 
     [PunRPC]
-    public void TakeDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)
+    public virtual void TakeDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)
     {
+        /*if (photonView.IsMine == false)
+            return;*/
+
+        if (!isDead)
+        {
+            hitEffect.transform.position = hitPoint;
+            hitEffect.transform.rotation = Quaternion.LookRotation(hitNormal);
+            hitEffect.Play();
+
+            //hit Sound
+        }
+
         if (curShield > 0)//보호막이 존재할 때
         {
 
@@ -285,8 +368,11 @@ public abstract class PlayerBase : MonoBehaviour, IDamageAndHealable
     }
 
     [PunRPC]
-    public void TakeHeal(float healAmount)
+    public virtual void TakeHeal(float heal)
     {
+        if (photonView.IsMine)
+            return;
+
         if (curHp == maxHp && curArmor == maxArmor)//체력과 방어구가 전부 꽉 찼을 때
             return;
 
@@ -294,7 +380,7 @@ public abstract class PlayerBase : MonoBehaviour, IDamageAndHealable
         {
             if (curHp == maxHp && curArmor != maxArmor)//체력이 만땅이지만 방어구가 최대치 아닐 때
             {
-                curArmor += healAmount;
+                curArmor += heal;
                 if (curArmor >= maxArmor)//상한치를 넘게하지 않는다
                 {
                     curArmor = maxArmor;
@@ -303,21 +389,21 @@ public abstract class PlayerBase : MonoBehaviour, IDamageAndHealable
 
             else if (curHp != maxHp && curArmor == 0)//방어구가 없으며 체력이 최대가 아닐 때(방어구가 존재해야하는 영웅일 경우)
             {
-                if (healAmount > (maxHp - curHp))//받는 힐이 (최대 체력 - 현재 체력)보다 클 때
+                if (heal > (maxHp - curHp))//받는 힐이 (최대 체력 - 현재 체력)보다 클 때
                 {
                     curHp = maxHp;
                     curArmor += (maxHp - curHp);
                 }
                 else//아닌 경우
                 {
-                    curHp += healAmount;
+                    curHp += heal;
                 }
             }
 
             else if (curHp != maxHp && maxArmor == 0)//최대 방어구가 0인데 최대체력이 아닐 때(방어구가 존재하지 않는 영웅일 경우)
-                curHp += healAmount;
+                curHp += heal;
 
-            curTotalHp += healAmount;
+            curTotalHp += heal;
             if (curTotalHp >= maxTotalHp)//최대 체력을 넘지않게 함
             {
                 curTotalHp = maxTotalHp;

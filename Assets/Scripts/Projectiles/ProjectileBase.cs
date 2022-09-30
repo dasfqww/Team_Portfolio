@@ -26,10 +26,10 @@ public abstract class ProjectileBase : MonoBehaviour
     protected ParticleSystem flightEffect;
     protected ParticleSystem hitEffect;
 
-    public abstract void SetProjectileStat();
-    public abstract void flightProjectile();
+    public abstract void SetProjectileStat();//스탯 초기화
+    public abstract void flightProjectile();//일직선? 곡선? 정크랫 폭탄? 날아가는 매커니즘
 
-    public virtual void SetAttackBox()
+    public virtual void SetAttackBox()//삭제할 예정
     {
         switch (projectileCollision)
         {
@@ -54,9 +54,9 @@ public abstract class ProjectileBase : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
         //TODO:충돌시 폭발 구현하기(직격, 스플래시 생기는 것도)    
         
-    }
+    }    
 }

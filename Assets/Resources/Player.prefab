@@ -340,7 +340,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8621252563626783003}
   - component: {fileID: -5687168045843963569}
-  - component: {fileID: 8621252563626783004}
   - component: {fileID: -8611213929949930269}
   - component: {fileID: 4638871300021908739}
   - component: {fileID: 3015770633114207197}
@@ -382,39 +381,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camPos: {fileID: 8621252563117959281}
+  projectile: {fileID: 7141160102238353875, guid: 8610d8eb71ad6f64db938ce78d9d7bb7, type: 3}
+  firePos: {fileID: 8621252562292623870}
+  hitEffect: {fileID: 19800002, guid: 99c73c92ac40473459640b165473206f, type: 3}
+  healEffect: {fileID: 0}
   dealAmount: 0
   healAmount: 0
+  curAmmo: 0
+  maxAmmo: 0
   curHp: 0
   maxHp: 50
   curArmor: 0
   maxArmor: 50
   curShield: 0
-  maxShield: 50
+  maxShield: 0
   maxTotalHp: 0
   curTotalHp: 0
   curUltimateGage: 0
   maxUltimateGage: 0
+  playerType: 0
   attackRate: 0
-  moveSpeed: 5
+  moveSpeed: 10
   lookSensitivity: 2
   crouchSpeed: 1.5
-  jumpForce: 4
-  crouchPosY: 0
---- !u!114 &8621252563626783004
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8621252563626783001}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e22f5d2f100e41e4086150f690158ed6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  projectile: {fileID: 7141160102238353875, guid: 8610d8eb71ad6f64db938ce78d9d7bb7, type: 3}
-  firePos: {fileID: 8621252562292623870}
-  impactVFX: {fileID: 100002, guid: 3b1513bcb86426b4795879be6a128ed7, type: 3}
+  jumpForce: 5
+  isDead: 0
+  crouchPosY: 0.5
 --- !u!136 &-8611213929949930269
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -443,7 +435,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &3015770633114207197
 MonoBehaviour:
