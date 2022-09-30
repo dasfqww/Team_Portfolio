@@ -22,11 +22,11 @@ public class GameManager : MonoBehaviour
         GameOver
     }
 
-    [SerializeField] float occupyingGageRed;// 레드팀 점령게이지
-    [SerializeField] float occupyingGageBlue;// 블루팀 점령게이지
+    [SerializeField] public float occupyingGageRed { get; set; }// 레드팀 점령게이지
+    [SerializeField] public float occupyingGageBlue { get; set; }// 블루팀 점령게이지
 
-    [SerializeField] int occupyingRatioRed;//레드팀 점령 유지 %
-    [SerializeField] int occupyingRatioBlue;//블루팀 점령 유지 %
+    [SerializeField] public int occupyingRatioRed { get; set; }//레드팀 점령 유지 %
+    [SerializeField] public int occupyingRatioBlue { get; set; }//블루팀 점령 유지 %
 
     //UI연결 무관
     [SerializeField] float fillSpeed = 1.0f;//점령 게이지 오르는 속도(multiplyer구현 예정)
