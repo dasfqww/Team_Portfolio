@@ -403,7 +403,7 @@ MonoBehaviour:
   attackRate: 0
   moveSpeed: 10
   lookSensitivity: 2
-  crouchSpeed: 7
+  crouchSpeed: 1.5
   jumpForce: 5
   isDead: 0
   crouchPosY: 0.5

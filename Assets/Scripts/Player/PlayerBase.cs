@@ -21,10 +21,10 @@ public class PlayerBase : MonoBehaviour, IDamageAndHealable
     [SerializeField] protected ParticleSystem hitEffect;
     [SerializeField] protected ParticleSystem healEffect;
 
-    protected enum PlayerType { Attack, Tank, Support }//굳이 필요할까?의문이 들지만 일단은 보류
+    protected enum PlayerType { Attack, Tank, Support }
     protected enum PlayerState { Idle, Attack, Moving, Dead}
 
-    [Header("Character Stat")]//데이터 테이블에 연결할 변수들
+    [Header("Character Stat")]
     [SerializeField] protected float dealAmount;
     [SerializeField] protected float healAmount;
     [SerializeField] protected int curAmmo;
@@ -40,16 +40,17 @@ public class PlayerBase : MonoBehaviour, IDamageAndHealable
     [SerializeField] protected float curUltimateGage;
     [SerializeField] protected float maxUltimateGage;
     [SerializeField] protected PlayerType playerType;
+
     
 
     [SerializeField] protected float attackRate;//연사 공격의 경우 공격 간격을 설정
 
     [Header("Movement")]
-    [SerializeField] float moveSpeed = 10.0f;
+    [SerializeField] float moveSpeed = 5.0f;
     [SerializeField] float lookSensitivity;
     [SerializeField] float crouchSpeed;
     [SerializeField] float jumpForce;
-    [SerializeField] protected bool isDead = false;//죽으면 모든 움직임을 제한한다.
+    [SerializeField] protected bool isDead = false;
 
     WaitForSeconds delayTime;
 
@@ -94,12 +95,11 @@ public class PlayerBase : MonoBehaviour, IDamageAndHealable
     }
 
     float SetTotalHp() { return maxHp + maxArmor + maxShield; }
-    float SetMoveSpeed() { float res=12.0f; return res; }
 
     // Update is called once per frame
     void Update()
     {
-        if (photonView.IsMine==true&&isDead==false)//본인 클라이고 죽지 않았을때만
+        if (photonView.IsMine==true)
         {
             if (Input.GetMouseButtonDown(0))
             {
@@ -113,16 +113,17 @@ public class PlayerBase : MonoBehaviour, IDamageAndHealable
 
             if (Input.GetKeyDown(KeyCode.E))
             {
-                photonView.RPC("useESkill", RpcTarget.All);
+                useESkill();
             }
 
             if (Input.GetKeyDown(KeyCode.LeftShift))
             {
-                photonView.RPC("useShiftSkill", RpcTarget.All);
+                useShiftSkill();
             }
-            
+
+            checkIsGround();
             TryJump();
-            TryCrouch();
+            //TryCrouch();
             Movement();
             CharacterRotation();
             CamRoatation();
@@ -173,7 +174,7 @@ public class PlayerBase : MonoBehaviour, IDamageAndHealable
     public virtual void useUltimateSkill()
     {
         if (photonView.IsMine == false)
-            return;
+
 
         if (curUltimateGage != maxUltimateGage)
             return;        
@@ -197,8 +198,8 @@ public class PlayerBase : MonoBehaviour, IDamageAndHealable
         }    
         else
         {
-            moveSpeed = 10.0f;
-            applyCrouchPosY = originPosY;
+            moveSpeed = 5.0f;
+            applyCrouchPosY = crouchPosY;
         }
 
         StartCoroutine("CrouchCoroutine");
@@ -221,6 +222,11 @@ public class PlayerBase : MonoBehaviour, IDamageAndHealable
         camPos.localPosition = new Vector3(0, applyCrouchPosY, 0);
     }
 
+    void checkIsGround()
+    {
+        isGround = Physics.Raycast(transform.position, Vector3.down, capsuleCollider.bounds.extents.y+0.01f);
+    }
+
     void TryJump()
     {
         if (Input.GetKeyDown(KeyCode.Space)&&isGround==true)
@@ -234,15 +240,6 @@ public class PlayerBase : MonoBehaviour, IDamageAndHealable
         if (isCrouch)//앉은 상태에서 점프시 앉은상태 해제
             Crouch();
         rigidbody.velocity = transform.up * jumpForce;
-        isGround = false;
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.tag=="Ground")
-        {
-            isGround = true;
-        }
     }
 
     void Movement()
@@ -275,6 +272,11 @@ public class PlayerBase : MonoBehaviour, IDamageAndHealable
 
         camPos.localEulerAngles = new Vector3(curCamRotX, 0, 0);
     }
+
+    /*void MovePlayer()
+    {
+        rigidbody.AddForce(moveDir.normalized * moveSpeed, ForceMode.Acceleration);
+    }*/
 
     [PunRPC]
     public virtual void TakeDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)

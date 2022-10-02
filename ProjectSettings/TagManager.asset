@@ -8,7 +8,6 @@ TagManager:
   - BlueTeam
   - RedTeam
   - OccupationZone
-  - Ground
   layers:
   - Default
   - TransparentFX

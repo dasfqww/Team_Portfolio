@@ -326,13 +326,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd5848665528134aae6a19abf442597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 5
+  rotSpeed: 200
+  camPos: {fileID: 0}
+  gravity: -10
+  jumpPower: 5
+  takeDamage: 120
+  takeHeal: 15
+  isAwayTeam: 0
+  curHp: 0
+  maxHp: 50
+  curArmor: 0
+  maxArmor: 50
+  curShield: 0
+  maxShield: 50
+  maxTotalHp: 0
+  curTotalHp: 0
   curHealth: {fileID: 845421415}
   maxHealth: {fileID: 2099020926}
   fillSpeed: 0.3
-  emptyBar_img: {fileID: 0}
-  Bar_img: {fileID: 0}
   imageList: []
-  canvas: {fileID: 0}
 --- !u!1 &438932473
 GameObject:
   m_ObjectHideFlags: 0
@@ -347,7 +360,7 @@ GameObject:
   - component: {fileID: 438932474}
   m_Layer: 0
   m_Name: Ground
-  m_TagString: Ground
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -812,6 +825,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f611c95e7cf7c94d9c6eb5333f25046, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  occupyingGageRed: 0
+  occupyingGageBlue: 0
+  occupyingRatioRed: 0
+  occupyingRatioBlue: 0
   fillSpeed: 1
   fillAmount: 4
   RedTeamWins: 0
