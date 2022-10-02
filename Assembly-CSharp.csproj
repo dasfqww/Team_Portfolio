@@ -928,6 +928,18 @@
       <Project>{4E6E61B2-461D-AD12-0A7F-84EC52218E65}</Project>
       <Name>PhotonUnityNetworking.Utilities.Culling.Editor</Name>
     </ProjectReference>
+    <ProjectReference Include="PlayFabSDKEditor.csproj">
+      <Project>{FEE1AD81-5D4C-DBEF-9574-FDA79022DBAD}</Project>
+      <Name>PlayFabSDKEditor</Name>
+    </ProjectReference>
+    <ProjectReference Include="PlayFabEditorExtensions.csproj">
+      <Project>{FEB2F9EB-DDFD-9945-19EA-DCE25B551FD7}</Project>
+      <Name>PlayFabEditorExtensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="PlayFab.csproj">
+      <Project>{B1548877-28D3-4CAA-0679-203AFF052728}</Project>
+      <Name>PlayFab</Name>
+    </ProjectReference>
     <ProjectReference Include="PhotonUnityNetworking.Editor.csproj">
       <Project>{38CC1F33-E6B9-0901-BBE3-C1E8A85D682A}</Project>
       <Name>PhotonUnityNetworking.Editor</Name>
@@ -959,18 +971,6 @@
     <ProjectReference Include="PunDemos.DemoSlotcarEditor.csproj">
       <Project>{F81A99F7-945C-5A4D-FD78-0131879CC51E}</Project>
       <Name>PunDemos.DemoSlotcarEditor</Name>
-    </ProjectReference>
-    <ProjectReference Include="PlayFabSDKEditor.csproj">
-      <Project>{FEE1AD81-5D4C-DBEF-9574-FDA79022DBAD}</Project>
-      <Name>PlayFabSDKEditor</Name>
-    </ProjectReference>
-    <ProjectReference Include="PlayFabEditorExtensions.csproj">
-      <Project>{FEB2F9EB-DDFD-9945-19EA-DCE25B551FD7}</Project>
-      <Name>PlayFabEditorExtensions</Name>
-    </ProjectReference>
-    <ProjectReference Include="PlayFab.csproj">
-      <Project>{B1548877-28D3-4CAA-0679-203AFF052728}</Project>
-      <Name>PlayFab</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
