@@ -43,15 +43,9 @@ public class PlayerFire : MonoBehaviourPunCallbacks
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit))
         {
-            PlayerMove pm = hit.transform.GetComponent<PlayerMove>();
+            
 
-            if (pm!=null)
-            {
-                pm.OnDamaged();
-            }
-
-            //RpcShowImpact(hit.point, hit.normal);
-            photonView.RPC("RpcShowImpact", RpcTarget.All, hit.point, hit.normal);
+            
         }
     }
 

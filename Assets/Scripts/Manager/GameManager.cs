@@ -56,13 +56,13 @@ public class GameManager : MonoBehaviour
     {
         ratioCountDelay = new WaitForSeconds(fillSpeed);
         //photonView.GetComponent<PhotonView>();
-        if (instance ==null)
+        if (instance == null)
         {
             instance = this;
             DontDestroyOnLoad(this.gameObject);
         }
 
-        else if (instance!=this)
+        else if (instance != this)
         {
             Destroy(gameObject);
         }
@@ -71,7 +71,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
         PhotonNetwork.Instantiate("Player", Vector3.up, Quaternion.identity);
         //OccupationZone.SetActive(false);
     }
@@ -80,7 +80,7 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         if ((playerRedCount == 0 && playerBlueCount == 0)
-            ||(playerRedCount>0&&playerBlueCount>0))
+            || (playerRedCount > 0 && playerBlueCount > 0))
         {
             isRedGageUp = false;
             isBlueGageUp = false;
@@ -89,12 +89,12 @@ public class GameManager : MonoBehaviour
         OccupyingRed();
         OccupyingBlue();
 
-        if (isOccupiedRed==true||isOccupiedBlue==true)
+        if (isOccupiedRed == true || isOccupiedBlue == true)
         {
 
         }
 
-        if (RedTeamWins== maxWins || BlueTeamWins== maxWins)
+        if (RedTeamWins == maxWins || BlueTeamWins == maxWins)
         {
             GameOver();
         }
@@ -144,12 +144,12 @@ public class GameManager : MonoBehaviour
 
     void GameOver()
     {
-        if (RedTeamWins==maxWins)
+        if (RedTeamWins == maxWins)
         {
             RedTeamWin();
         }
 
-        else if(BlueTeamWins==maxWins)
+        else if (BlueTeamWins == maxWins)
         {
             BlueTeamWin();
         }

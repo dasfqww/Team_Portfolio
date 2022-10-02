@@ -231,11 +231,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &4425847 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4105658021341529592, guid: e3b8c61bdc8e0b042ae49092974474b8, type: 3}
-  m_PrefabInstance: {fileID: 4425845}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &14382530
 GameObject:
   m_ObjectHideFlags: 0
@@ -663,7 +658,7 @@ GameObject:
   - component: {fileID: 438932474}
   m_Layer: 0
   m_Name: Ground
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1715,17 +1710,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66d753fab8aa249489dfd38e02a718f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  curScramble_txt: {fileID: 615632322}
-  unLock_Img: {fileID: 751991947}
-  waiting_canvas: {fileID: 65622926}
-  scrambling: {fileID: 1990038618}
-  aim: {fileID: 4425847}
-  red_member_num: {fileID: 606117322}
-  blue_member_num: {fileID: 585625344}
-  fight_txt: {fileID: 495739064}
-  scramble_ring: {fileID: 674028662}
-  BlueTeam_txt: {fileID: 1953798904}
-  RedTeam_txt: {fileID: 774160538}
 --- !u!1 &1330876989
 GameObject:
   m_ObjectHideFlags: 0
@@ -2479,7 +2463,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2006998761}
-  - component: {fileID: 2006998762}
+  - component: {fileID: 2006998764}
   - component: {fileID: 2006998763}
   m_Layer: 0
   m_Name: GameManager
@@ -2503,26 +2487,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2006998762
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2006998760}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f611c95e7cf7c94d9c6eb5333f25046, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fillSpeed: 1
-  fillAmount: 4
-  RedTeamWins: 0
-  BlueTeamWins: 0
-  isRedGageUp: 0
-  isBlueGageUp: 0
-  isOccupiedRed: 0
-  isOccupiedBlue: 0
 --- !u!114 &2006998763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2545,6 +2509,26 @@ MonoBehaviour:
   sceneViewId: 1
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &2006998764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2006998760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f611c95e7cf7c94d9c6eb5333f25046, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fillSpeed: 1
+  fillAmount: 4
+  RedTeamWins: 0
+  BlueTeamWins: 0
+  isRedGageUp: 0
+  isBlueGageUp: 0
+  isOccupiedRed: 0
+  isOccupiedBlue: 0
 --- !u!1 &2008103803
 GameObject:
   m_ObjectHideFlags: 0

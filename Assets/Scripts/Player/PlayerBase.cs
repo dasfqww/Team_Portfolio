@@ -121,19 +121,17 @@ public class PlayerBase : MonoBehaviour, IDamageAndHealable
                 useShiftSkill();
             }
 
-            checkIsGround();
             TryJump();
-            //TryCrouch();
-            Movement();
-            CharacterRotation();
+            TryCrouch();
             CamRoatation();
         }        
     }
 
-     /*private void FixedUpdate()
-     {
-         MovePlayer();
-     }*/
+     private void FixedUpdate()
+     {      
+         Movement();
+         CharacterRotation();
+     }
 
     public virtual void SetupCharacter()//여기서 캐릭터의 스탯을 설정할 것
     {
@@ -198,8 +196,8 @@ public class PlayerBase : MonoBehaviour, IDamageAndHealable
         }    
         else
         {
-            moveSpeed = 5.0f;
-            applyCrouchPosY = crouchPosY;
+            moveSpeed = 10.0f;
+            applyCrouchPosY = originPosY;
         }
 
         StartCoroutine("CrouchCoroutine");
@@ -222,10 +220,7 @@ public class PlayerBase : MonoBehaviour, IDamageAndHealable
         camPos.localPosition = new Vector3(0, applyCrouchPosY, 0);
     }
 
-    void checkIsGround()
-    {
-        isGround = Physics.Raycast(transform.position, Vector3.down, capsuleCollider.bounds.extents.y+0.01f);
-    }
+    
 
     void TryJump()
     {
@@ -240,6 +235,16 @@ public class PlayerBase : MonoBehaviour, IDamageAndHealable
         if (isCrouch)//앉은 상태에서 점프시 앉은상태 해제
             Crouch();
         rigidbody.velocity = transform.up * jumpForce;
+        isGround = false;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag=="Ground"||
+            collision.gameObject.tag=="OccupationZone")
+        {
+            isGround = true;
+        }
     }
 
     void Movement()
@@ -272,11 +277,6 @@ public class PlayerBase : MonoBehaviour, IDamageAndHealable
 
         camPos.localEulerAngles = new Vector3(curCamRotX, 0, 0);
     }
-
-    /*void MovePlayer()
-    {
-        rigidbody.AddForce(moveDir.normalized * moveSpeed, ForceMode.Acceleration);
-    }*/
 
     [PunRPC]
     public virtual void TakeDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)
