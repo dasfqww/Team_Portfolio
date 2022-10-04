@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon;
+using Photon.Pun;
+using Photon.Realtime;
 
 public class UI_HpGauge : MonoBehaviour
 {
-    PlayerMove playerMove = new PlayerMove();
-
     // 현재체력 / 맥스체력 text 표시
     public Text curHealth = null;
     public Text maxHealth = null;
@@ -27,19 +28,21 @@ public class UI_HpGauge : MonoBehaviour
     Vector2 createPoint;
     public GameObject canvas = null;
 
+    bool make_hpBar = false;
+
     float test = 100;
 
     private void Awake()
     {
-        makeBar();
+        //makeBar();
         createPoint = emptyBar_img.GetComponent<Image>().rectTransform.position;
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        curHealth.text = playerMove.curhp.ToString();
-        maxHealth.text = playerMove.maxhp.ToString();
+        //curHealth.text = GameManager.instance.player.GetComponent<Solta>().curTotalHp.ToString();
+        //maxHealth.text = GameManager.instance.player.GetComponent<Solta>().maxTotalHp.ToString();
 
         /*for (int i = 0; i < imageList.Count; i++)
         {
@@ -50,17 +53,30 @@ public class UI_HpGauge : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        HealthDown();
+        if(GameManager.instance.player.GetComponent<Solta>().curTotalHp > 0)
+        {
+            if (!make_hpBar)
+            {
+                if (GameManager.instance.player.GetComponent<Solta>().maxTotalHp != 0)
+                {
+                    makeBar();
+                    curHealth.text = GameManager.instance.player.GetComponent<Solta>().curTotalHp.ToString();
+                    maxHealth.text = GameManager.instance.player.GetComponent<Solta>().maxTotalHp.ToString();
+                    make_hpBar = true;
+                }
+            }
+            HealthDown();
 
-        curHealth.text = playerMove.curhp.ToString();
-        maxHealth.text = playerMove.maxhp.ToString();
+            curHealth.text = GameManager.instance.player.GetComponent<Solta>().curTotalHp.ToString();
+            maxHealth.text = GameManager.instance.player.GetComponent<Solta>().maxTotalHp.ToString();
 
-        fillHealthBox();
+            fillHealthBox();
+        }
     }
 
     void makeBar()
     {
-        int Bar_num = (int)playerMove.maxhp / 20; // 체력바 칸수(현재 캐릭터 맥스체력 / 20)
+        int Bar_num = (int)GameManager.instance.player.GetComponent<Solta>().maxTotalHp / 20; // 체력바 칸수(현재 캐릭터 맥스체력 / 20)
         for(int i = 0; i < Bar_num; i++)
         {
             newEmptyBar_img = Instantiate(emptyBar_img, createPoint, Quaternion.identity, canvas.transform);
@@ -77,8 +93,8 @@ public class UI_HpGauge : MonoBehaviour
 
     void fillHealthBox()
     {
-        int fill_num = (int)playerMove.curhp / 20;
-        int rest_gauge = (int)playerMove.curhp % 20;
+        int fill_num = (int)GameManager.instance.player.GetComponent<Solta>().curTotalHp / 20;
+        int rest_gauge = (int)GameManager.instance.player.GetComponent<Solta>().curTotalHp % 20;
         fill = 0;
         //print("fillnum : " + fill_num);
         //float filledAmount = 25.0f * last_fill_idx;
@@ -90,7 +106,7 @@ public class UI_HpGauge : MonoBehaviour
 
         fill *= 20.0f;
 
-        if (playerMove.curhp > fill) // Hp증가시킬때 by 혜원
+        if (GameManager.instance.player.GetComponent<Solta>().curTotalHp > fill) // Hp증가시킬때 by 혜원
         {
             if (fill_num == 0)
             {
@@ -130,9 +146,9 @@ public class UI_HpGauge : MonoBehaviour
                 }
             }
         }
-        else if (playerMove.curhp < fill) // HP 감소시킬때 by 혜원
+        else if (GameManager.instance.player.GetComponent<Solta>().curTotalHp < fill) // HP 감소시킬때 by 혜원
         {
-            if (fill_num >= imageList.Count - 1)//if (fill_num <= imageList.Count - 1 && fill_num >= 0) //if (fill_num >= imageList.Count - 1)
+            if (fill_num <= imageList.Count - 1)//if (fill_num <= imageList.Count - 1 && fill_num >= 0) //if (fill_num >= imageList.Count - 1)
             {
                 if (imageList[fill_num].fillAmount > (float)rest_gauge / 20.0f)
                 {
@@ -174,7 +190,7 @@ public class UI_HpGauge : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            playerMove.curhp = 50.0f;
+            GameManager.instance.player.GetComponent<Solta>().curTotalHp = 50.0f;
             //print("+");
             //playerMove.curhp = 8;
             //print(playerMove.curhp);
@@ -182,7 +198,7 @@ public class UI_HpGauge : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             //print("-");
-            playerMove.curhp = 70;
+            GameManager.instance.player.GetComponent<Solta>().curTotalHp = 70;
             //print(playerMove.curhp);
         }
     }

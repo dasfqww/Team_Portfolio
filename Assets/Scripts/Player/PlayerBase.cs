@@ -29,14 +29,14 @@ public class PlayerBase : MonoBehaviour, IDamageAndHealable
     [SerializeField] protected float healAmount;
     [SerializeField] protected int curAmmo;
     [SerializeField] protected int maxAmmo;
-    [SerializeField] protected float curHp; // UI 체력바 테스트를 하느라 상속받았습니다. by 혜원
-    [SerializeField] protected float maxHp = 50.0f; // UI 체력바 테스트를 하느라 상속받았습니다. by 혜원
+    [SerializeField] protected float curHp;
+    [SerializeField] protected float maxHp = 50.0f;
     [SerializeField] protected float curArmor;
     [SerializeField] protected float maxArmor = 50.0f;
     [SerializeField] protected float curShield;
     [SerializeField] protected float maxShield = 50.0f;
-    [SerializeField] protected float maxTotalHp;
-    [SerializeField] protected float curTotalHp;
+    [SerializeField] public float maxTotalHp { get; set; }
+    [SerializeField] public float curTotalHp { get; set; }
     [SerializeField] protected float curUltimateGage;
     [SerializeField] protected float maxUltimateGage;
     [SerializeField] protected PlayerType playerType;
@@ -99,35 +99,38 @@ public class PlayerBase : MonoBehaviour, IDamageAndHealable
     // Update is called once per frame
     void Update()
     {
-        if (photonView.IsMine==true)
+        if(!isDead) // 살아있을때만 동작하기
         {
-            if (Input.GetMouseButtonDown(0))
+            if (photonView.IsMine == true)
             {
-                photonView.RPC("useLeftClick", RpcTarget.All);
-            }
+                if (Input.GetMouseButtonDown(0))
+                {
+                    photonView.RPC("useLeftClick", RpcTarget.All);
+                }
 
-            if (Input.GetMouseButtonDown(1))
-            {
-                photonView.RPC("useRightClickSkill", RpcTarget.All);
-            }
+                if (Input.GetMouseButtonDown(1))
+                {
+                    photonView.RPC("useRightClickSkill", RpcTarget.All);
+                }
 
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                useESkill();
-            }
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    useESkill();
+                }
 
-            if (Input.GetKeyDown(KeyCode.LeftShift))
-            {
-                useShiftSkill();
-            }
+                if (Input.GetKeyDown(KeyCode.LeftShift))
+                {
+                    useShiftSkill();
+                }
 
-            checkIsGround();
-            TryJump();
-            //TryCrouch();
-            Movement();
-            CharacterRotation();
-            CamRoatation();
-        }        
+                checkIsGround();
+                TryJump();
+                //TryCrouch();
+                Movement();
+                CharacterRotation();
+                CamRoatation();
+            }
+        }  
     }
 
      /*private void FixedUpdate()
@@ -293,9 +296,8 @@ public class PlayerBase : MonoBehaviour, IDamageAndHealable
             //hit Sound
         }
 
-        if (curShield > 0)//보호막이 존재할 때
+        if (curShield > 0) //보호막이 존재할 때
         {
-
             if ((damage > curShield) && (curShield > 0))//보호막이 존재하고 받는 데미지가 현재 보호막 양보다 클때
             {
                 if (curArmor > 0)// 방어구가 존재할때

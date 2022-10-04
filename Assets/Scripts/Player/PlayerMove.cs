@@ -316,14 +316,14 @@ public class PlayerMove : MonoBehaviourPunCallbacks
     private void OnTriggerEnter(Collider other)
     {
         isAwayTeam = true; // 테스트를 위해 잠시 팀을 지정했습니다.
-        
-        if (other.gameObject.tag=="OccupationZone"&&isAwayTeam==true)
+        print("trigger");
+        if (other.gameObject.tag=="OccupationZone" && isAwayTeam==true)
         {
-            print("OccupationZone Enter"); // 테스트를 위해 잠시 팀을 지정했습니다.
+            print("OccupationZone Enter"); 
             GameManager.instance.playerRedCount++;
         }
 
-        else if(other.gameObject.tag== "OccupationZone"&&isAwayTeam==false)
+        else if(other.gameObject.tag== "OccupationZone" && isAwayTeam==false)
         {
             GameManager.instance.playerBlueCount++;
         }
@@ -338,7 +338,6 @@ public class PlayerMove : MonoBehaviourPunCallbacks
             print("OccupationZone out"); // 테스트를 위해 잠시 팀을 지정했습니다.
             GameManager.instance.playerRedCount--;
         }
-
         else if (other.gameObject.tag == "OccupationZone" && isAwayTeam == false)
         {
             GameManager.instance.playerBlueCount--;
