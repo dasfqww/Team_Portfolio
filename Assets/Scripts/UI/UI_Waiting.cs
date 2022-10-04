@@ -106,10 +106,10 @@ public class UI_Waiting : MonoBehaviour
                 scramble_ring.fillAmount = GameManager.instance.occupyingGageRed;
         }
 
-
         // : 점령존에 있는 팀별 플레이어 수 출력 by 혜원
         if (GameManager.instance.playerRedCount != 0)
         {
+            print("red : " + GameManager.instance.playerRedCount);
             red_member_num.SetActive(true);
             red_member_num.GetComponentInChildren<Text>().text = GameManager.instance.playerRedCount.ToString();
         }
