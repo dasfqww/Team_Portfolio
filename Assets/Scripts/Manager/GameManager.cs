@@ -7,7 +7,6 @@ using Photon.Realtime;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance = null;
-    public GameObject player;
 
     //[SerializeField] GameObject occupationZone;
 
@@ -53,9 +52,6 @@ public class GameManager : MonoBehaviour
 
     WaitForSeconds ratioCountDelay;
 
-    //by Çý¿ø
-    float timer;
-
     private void Awake()
     {
         ratioCountDelay = new WaitForSeconds(fillSpeed);
@@ -75,8 +71,8 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = PhotonNetwork.Instantiate("Player", Vector3.up, Quaternion.identity);
-        //communicators.Add(PhotonNetwork.Instantiate("Player", Vector3.up, Quaternion.identity));
+        
+        PhotonNetwork.Instantiate("Player", Vector3.up, Quaternion.identity);
         //OccupationZone.SetActive(false);
     }
 
@@ -93,46 +89,12 @@ public class GameManager : MonoBehaviour
         OccupyingRed();
         OccupyingBlue();
 
-        if (isOccupiedRed == true || isOccupiedBlue == true)
+        if (isOccupiedRed==true||isOccupiedBlue==true)
         {
-            if (!isOccupiedBlue)
-                timer += Time.deltaTime;
-            if (timer >= 1)
-            {
-                occupyingRatioRed += (int)timer;
-                if (occupyingRatioRed > 100)
-                {
-                    occupyingRatioRed = 100;
-                }
-                timer = 0;
-            }
 
-            if (occupyingRatioRed == 100)
-            {
-                RedTeamWins++;
-            }
-
-            if (!isOccupiedRed)
-            {
-                timer += Time.deltaTime;
-                if (timer >= 1)
-                {
-                    occupyingRatioBlue += (int)timer;
-                    if (occupyingRatioBlue > 100)
-                    {
-                        occupyingRatioBlue = 100;
-                    }
-                    timer = 0;
-                }
-
-                if (occupyingRatioBlue == 100)
-                {
-                    BlueTeamWins++;
-                }
-            }
         }
 
-        if (RedTeamWins == maxWins || BlueTeamWins== maxWins)
+        if (RedTeamWins== maxWins || BlueTeamWins== maxWins)
         {
             GameOver();
         }
@@ -152,20 +114,6 @@ public class GameManager : MonoBehaviour
     {
         if (playerRedCount > 0 && playerBlueCount == 0)
         {
-            //Çý¿ø
-            if (occupyingGageRed < fillAmount)
-                occupyingGageRed += fillSpeed;
-
-            if (occupyingGageRed == fillAmount)
-            {
-                occupyingGageBlue = 0;
-                isOccupiedBlue = false;
-                isOccupiedRed = true;
-                //occupyingRatioRed += (int)fillSpeed;
-            }
-            //end
-
-
             isRedGageUp = true;
             isBlueGageUp = false;
             //TODO:·¹µåÆÀ Á¡·É °ÔÀÌÁö »ó½Â ¹× UIÃâ·Â
@@ -182,19 +130,6 @@ public class GameManager : MonoBehaviour
     {
         if (playerRedCount == 0 && playerBlueCount > 0)
         {
-            //by Çý¿ø
-            if (occupyingGageBlue < fillAmount)
-                occupyingGageBlue += fillSpeed;
-
-            if (occupyingGageBlue == fillAmount)
-            {
-                occupyingGageRed = 0;
-                isOccupiedRed = false;
-                isOccupiedBlue = true;
-                //occupyingRatioBlue += (int)fillSpeed;
-            }
-            // : end
-
             isRedGageUp = false;
             isBlueGageUp = true;
             //TODO:ºí·çÆÀ Á¡·É °ÔÀÌÁö »ó½Â ¹× UIÃâ·Â

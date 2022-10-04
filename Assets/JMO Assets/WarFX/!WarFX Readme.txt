@@ -18,8 +18,7 @@ Change the options of the editor, select the GameObject(s) you want to change, a
 
 CARTOON FX SPAWN SYSTEM
 -----------------------
-CFX_SpawnSystem allows you to easily preload your effects at the beginning of a Scene and get them later, avoiding the need to call 
-. It is highly recommended for mobile platforms!
+CFX_SpawnSystem allows you to easily preload your effects at the beginning of a Scene and get them later, avoiding the need to call Instantiate. It is highly recommended for mobile platforms!
 Create an empty GameObject and drag the script on it. You can then add GameObjects to it with its custom interface.
 To get an object in your code, use CFX_SpawnSystem.GetNextObject(object), where 'object' is the original reference to the GameObject (same as if you used Instantiate).
 Use the CFX_SpawnSystem.AllObjectsLoaded boolean value to check when objects have finished loading.
